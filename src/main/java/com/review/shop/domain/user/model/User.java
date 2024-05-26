@@ -45,16 +45,17 @@ public class User extends BaseEntity {
     private String address;
 
     @Enumerated(EnumType.STRING)
-    @Column(length= 15)
+    @Column(length = 15)
     private SocialProvider provider;
 
     @Enumerated(EnumType.STRING)
-    @Column(length = 10, nullable = false, columnDefinition = "DEFAULT 'ACTIVE'")
+    @Column(length = 10, nullable = false)
+    @ColumnDefault("'ACTIVE'")
     private UserStatus status;
 
     private LocalDate inactiveDate;
 
-    @Column(columnDefinition = "DEFAULT 0")
+    @ColumnDefault("0")
     private Integer point;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
