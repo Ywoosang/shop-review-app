@@ -1,20 +1,26 @@
 spring:
     datasource:
-        url: jdbc:mysql://db:3306/${DB_NAME}?useSSL=false&useUnicode=true&serverTimezone=Asia/Seoul
+        url: jdbc:mysql://db:3306/${DB_NAME}?useSSL=false&allowPublicKeyRetrieval=true&useUnicode=true&serverTimezone=Asia/Seoul
         username: ${DB_USERNAME}
         password: ${DB_PASSWORD}
         driver-class-name: com.mysql.cj.jdbc.Driver
     jpa:
         hibernate:
-            ddl-auto: create
+            ddl-auto: ${DB_DDL_AUTO}
         properties:
             hibernate:
                 dialect: org.hibernate.dialect.MySQLDialect
                 show_sql: true
                 format_sql: true
+    devtools:
+        livereload:
+            enabled: true
+        restart:
+            enabled: true
 logging:
     level:
         org.hibernate.SQL: debug
         org.hibernate.type: trace
+
 
 
