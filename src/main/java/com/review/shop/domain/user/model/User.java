@@ -1,15 +1,12 @@
 package com.review.shop.domain.user.model;
 
-import com.review.shop.common.model.BaseEntity;
+import com.review.shop.global.model.BaseEntity;
 import com.review.shop.domain.review.model.Review;
 import com.review.shop.domain.user.enums.Gender;
 import com.review.shop.domain.user.enums.SocialProvider;
 import com.review.shop.domain.user.enums.UserStatus;
 import jakarta.persistence.*;
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
 
 import java.time.LocalDate;
@@ -23,6 +20,7 @@ import java.util.*;
                 columnNames = {"email"}
         )
 })
+@Builder
 @NoArgsConstructor(access= AccessLevel.PROTECTED)
 @AllArgsConstructor
 public class User extends BaseEntity {

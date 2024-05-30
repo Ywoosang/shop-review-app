@@ -1,6 +1,6 @@
 package com.review.shop.domain.user.model;
 
-import com.review.shop.common.model.BaseEntity;
+import com.review.shop.global.model.BaseEntity;
 import com.review.shop.domain.mission.enums.MissionStatus;
 import com.review.shop.domain.mission.model.Mission;
 import jakarta.persistence.*;

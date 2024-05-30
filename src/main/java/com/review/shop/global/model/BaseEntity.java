@@ -1,6 +1,5 @@
-package com.review.shop.common.model;
+package com.review.shop.global.model;
 
-import jakarta.persistence.Column;
 import jakarta.persistence.MappedSuperclass;
 import lombok.Getter;
 import org.springframework.data.annotation.CreatedDate;

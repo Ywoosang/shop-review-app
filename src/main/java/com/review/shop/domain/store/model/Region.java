@@ -1,6 +1,6 @@
 package com.review.shop.domain.store.model;
 
-import com.review.shop.common.model.BaseEntity;
+import com.review.shop.global.model.BaseEntity;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;

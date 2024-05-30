@@ -1,6 +1,6 @@
 package com.review.shop.domain.store.model;
 
-import com.review.shop.common.model.BaseEntity;
+import com.review.shop.global.model.BaseEntity;
 import com.review.shop.domain.mission.model.Mission;
 import com.review.shop.domain.review.model.Review;
 import jakarta.persistence.*;

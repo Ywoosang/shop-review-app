@@ -1,8 +1,7 @@
 package com.review.shop.domain.mission.model;
-
-import com.review.shop.common.model.BaseEntity;
 import com.review.shop.domain.store.model.Store;
 import com.review.shop.domain.user.model.UserMission;
+import com.review.shop.global.model.BaseEntity;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
