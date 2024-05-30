@@ -5,14 +5,13 @@ import com.review.shop.domain.mission.enums.MissionStatus;
 import com.review.shop.domain.mission.model.Mission;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@AllArgsConstructor
 public class UserMission extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,4 +27,17 @@ public class UserMission extends BaseEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "mission_id")
     private Mission mission;
+
+    @Builder
+    public UserMission(MissionStatus status) {
+        this.status = status;
+    }
+
+    public void addUser(User user) {
+        this.user = user;
+    }
+
+    public void addMission(Mission mission) {
+        this.mission = mission;
+    }
 }

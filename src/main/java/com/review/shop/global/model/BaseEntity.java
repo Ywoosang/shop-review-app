@@ -10,7 +10,6 @@ import java.time.LocalDateTime;
 @MappedSuperclass
 @Getter
 public class BaseEntity {
-
     @CreatedDate
     private LocalDateTime createdAt;
 

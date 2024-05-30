@@ -20,9 +20,7 @@ import java.util.*;
                 columnNames = {"email"}
         )
 })
-@Builder
 @NoArgsConstructor(access= AccessLevel.PROTECTED)
-@AllArgsConstructor
 public class User extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -57,11 +55,39 @@ public class User extends BaseEntity {
     private Integer point;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-    private List<UserMission> missions = new ArrayList<>();
+    private List<UserMission> userMissions = new ArrayList<>();
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private Set<UserFoodCategory> userFoodCategories = new HashSet<>();
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<Review> reviews = new ArrayList<>();
+
+    @Builder
+    public User(String email, String name, Gender gender, Integer age, String address, SocialProvider provider, UserStatus status, LocalDate inactiveDate, Integer point) {
+        this.email = email;
+        this.name = name;
+        this.gender = gender;
+        this.age = age;
+        this.address = address;
+        this.provider = provider;
+        this.status = status;
+        this.inactiveDate = inactiveDate;
+        this.point = point;
+    }
+
+    public void addUserFoodCategory(UserFoodCategory userFoodCategory) {
+        userFoodCategories.add(userFoodCategory);
+        userFoodCategory.addUser(this);
+    }
+
+    public void addUserMission(UserMission userMission) {
+        userMissions.add(userMission);
+        userMission.addUser(this);
+    }
+
+    public void addReview(Review review) {
+        reviews.add(review);
+        review.addUser(this);
+    }
 }

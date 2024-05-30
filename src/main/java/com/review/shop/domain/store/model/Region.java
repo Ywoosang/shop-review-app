@@ -3,6 +3,7 @@ package com.review.shop.domain.store.model;
 import com.review.shop.global.model.BaseEntity;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -16,4 +17,9 @@ public class Region extends BaseEntity {
 
     @Column(nullable = false, length = 50)
     private String name;
+
+    @Builder
+    public Region(String name) {
+        this.name = name;
+    }
 }

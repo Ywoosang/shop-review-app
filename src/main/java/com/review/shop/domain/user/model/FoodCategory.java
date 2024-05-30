@@ -2,7 +2,10 @@ package com.review.shop.domain.user.model;
 
 import com.review.shop.global.model.BaseEntity;
 import jakarta.persistence.*;
+import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Getter
@@ -12,6 +15,7 @@ import lombok.Getter;
                 columnNames = {"name"}
         )
 })
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class FoodCategory extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -19,4 +23,9 @@ public class FoodCategory extends BaseEntity {
 
     @Column(nullable = false)
     private String name;
+
+    @Builder
+    public FoodCategory(String name) {
+        this.name = name;
+    }
 }
