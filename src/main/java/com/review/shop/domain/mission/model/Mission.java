@@ -4,6 +4,8 @@ import com.review.shop.domain.user.model.UserMission;
 import com.review.shop.global.model.BaseEntity;
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.DynamicInsert;
+import org.hibernate.annotations.DynamicUpdate;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -12,6 +14,8 @@ import java.util.List;
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@DynamicInsert
+@DynamicUpdate
 public class Mission extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -34,7 +38,7 @@ public class Mission extends BaseEntity {
     private List<UserMission> userMissions = new ArrayList<>();
 
     @Builder
-    public Mission(String content, String test, LocalDate deadline, Integer point) {
+    private Mission(String content, String test, LocalDate deadline, Integer point) {
         this.content = content;
         this.test = test;
         this.deadline = deadline;
