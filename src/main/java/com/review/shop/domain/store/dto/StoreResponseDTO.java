@@ -27,6 +27,9 @@ public class StoreResponseDTO {
     public static class CreateStoreReviewResponseDTO {
         @Schema(description = "리뷰 ID", example = "1")
         private Long reviewId;
+
+        @Schema(description = "가게 리뷰 생성일", example = "2024-06-02T09:20:23.716752502")
+        private LocalDateTime createdAt;
     }
 
 

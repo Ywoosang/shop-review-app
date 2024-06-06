@@ -1,5 +1,6 @@
 package com.review.shop.domain.store.dto;
 
+import com.review.shop.domain.store.model.Region;
 import com.review.shop.domain.store.model.Store;
 import com.review.shop.domain.user.model.User;
 import com.review.shop.global.api.code.status.ErrorStatus;
@@ -24,8 +25,8 @@ public class StoreRequestDTO {
         @Schema(description = "지역 ID", example = "1")
         @NotNull(message = "지역 ID는 필수 항목입니다.")
         @IsExist(
-                entity = Store.class,
-                errorStatus = ErrorStatus.STORE_NOT_FOUND
+                entity = Region.class,
+                errorStatus = ErrorStatus.STORE_REGION_NOT_FOUND
         )
         private Long regionId;
     }

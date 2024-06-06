@@ -55,6 +55,7 @@ public class StoreConverter {
     public static CreateStoreReviewResponseDTO toCreateStoreReviewDTO(Review review) {
         return CreateStoreReviewResponseDTO.builder()
                 .reviewId(review.getId())
+                .createdAt(review.getCreatedAt())
                 .build();
     }
 

@@ -8,6 +8,7 @@ import com.review.shop.global.validation.annotation.common.IsExist;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,6 +19,7 @@ import static com.review.shop.global.api.code.status.ErrorStatus.*;
 
 @RestController
 @RequiredArgsConstructor
+@Validated
 @RequestMapping("/reviews")
 @Tag(name = "Review", description = "리뷰 관련 API")
 public class ReviewController {
@@ -26,7 +28,7 @@ public class ReviewController {
     @GetMapping("/{reviewId}")
     @Operation(summary="리뷰 조회", description = "등록된 리뷰를 id 를 통해 조회한다.")
     public CommonResponse<FindReviewResponseDTO> findReview(
-            @IsExist(entity = Review.class, errorStatus = REVIEW_NOT_FOUND) @PathVariable Long reviewId
+            @PathVariable(name = "reviewId") @IsExist(entity = Review.class, errorStatus = REVIEW_NOT_FOUND) Long reviewId
     ) {
         Review review = reviewService.findReview(reviewId).get();
         return CommonResponse.success(ReviewConverter.toFindReviewDTO(review));
