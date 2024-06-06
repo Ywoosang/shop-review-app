@@ -8,6 +8,8 @@ import com.review.shop.domain.user.enums.UserStatus;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
+import org.hibernate.annotations.DynamicInsert;
+import org.hibernate.annotations.DynamicUpdate;
 
 import java.time.LocalDate;
 import java.util.*;
@@ -21,6 +23,8 @@ import java.util.*;
         )
 })
 @NoArgsConstructor(access= AccessLevel.PROTECTED)
+@DynamicInsert
+@DynamicUpdate
 public class User extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -36,8 +40,10 @@ public class User extends BaseEntity {
     @Column(nullable = false, length = 10)
     private Gender gender;
 
+    @Column(length = 5)
     private Integer age;
 
+    @Column(length = 100)
     private String address;
 
     @Enumerated(EnumType.STRING)
@@ -64,7 +70,7 @@ public class User extends BaseEntity {
     private List<Review> reviews = new ArrayList<>();
 
     @Builder
-    public User(String email, String name, Gender gender, Integer age, String address, SocialProvider provider, UserStatus status, LocalDate inactiveDate, Integer point) {
+    private User(String email, String name, Gender gender, Integer age, String address, SocialProvider provider, UserStatus status, LocalDate inactiveDate, Integer point) {
         this.email = email;
         this.name = name;
         this.gender = gender;

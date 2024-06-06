@@ -1,23 +1,41 @@
 package com.review.shop.domain.user.converter;
 
-
-import com.review.shop.domain.user.dto.UserRequestDTO;
-import com.review.shop.domain.user.dto.UserResponseDTO;
+import com.review.shop.domain.user.dto.UserRequestDTO.SignUpRequestDTO;
+import com.review.shop.domain.user.dto.UserResponseDTO.FindUserResponseDTO;
+import com.review.shop.domain.user.dto.UserResponseDTO.SignUpResponseDTO;
 import com.review.shop.domain.user.enums.Gender;
 import com.review.shop.domain.user.enums.SocialProvider;
 import com.review.shop.domain.user.model.User;
 
 public class UserConverter {
     // Entity -> ResponseDTO
-    public static UserResponseDTO.SignUpDTO toSignUpDTO(User user) {
-        return UserResponseDTO.SignUpDTO.builder()
+    public static SignUpResponseDTO toSignUpDTO(User user) {
+        return SignUpResponseDTO.builder()
                 .userId(user.getId())
                 .createdAt(user.getCreatedAt())
                 .build();
     }
 
+    public static FindUserResponseDTO toFindUserDTO(User user) {
+        return FindUserResponseDTO.builder()
+                .userId(user.getId())
+                .email(user.getEmail())
+                .name(user.getName())
+                .gender(user.getGender())
+                .age(user.getAge())
+                .address(user.getAddress())
+                .provider(user.getProvider())
+                .status(user.getStatus())
+                .point(user.getPoint())
+                .createdAt(user.getCreatedAt())
+                .updatedAt(user.getUpdatedAt())
+                .build();
+    }
+
+
+
     // requestDTO -> Entity
-    public static User toUser(UserRequestDTO.SignUpDTO request) {
+    public static User toUser(SignUpRequestDTO request) {
         Gender gender =  switch(request.getGender()) {
             case "MALE" -> Gender.MALE;
             case "FEMALE" -> Gender.FEMALE;
