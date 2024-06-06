@@ -6,6 +6,8 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.DynamicInsert;
+import org.hibernate.annotations.DynamicUpdate;
 
 @Entity
 @Getter
@@ -16,6 +18,8 @@ import lombok.NoArgsConstructor;
         )
 })
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@DynamicInsert
+@DynamicUpdate
 public class FoodCategory extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,7 +29,7 @@ public class FoodCategory extends BaseEntity {
     private String name;
 
     @Builder
-    public FoodCategory(String name) {
+    private FoodCategory(String name) {
         this.name = name;
     }
 }
