@@ -1,14 +1,14 @@
 package com.review.shop.global.validation.annotation.common;
 
 import com.review.shop.global.api.code.status.ErrorStatus;
-import com.review.shop.global.validation.validator.common.EntityNotExistsValidator;
+import com.review.shop.global.validation.validator.common.EntityExistsValidator;
 import jakarta.validation.Constraint;
 import jakarta.validation.Payload;
 
 import java.lang.annotation.*;
 
 @Documented
-@Constraint(validatedBy = EntityNotExistsValidator.class)
+@Constraint(validatedBy = EntityExistsValidator.class)
 @Target({
         ElementType.METHOD,
         ElementType.FIELD,
