@@ -19,4 +19,8 @@ public class RegionRepository {
     public Optional<Region> findById(Long regionId) {
         return Optional.ofNullable(em.find(Region.class, regionId));
     }
+
+    public Integer getCount() {
+        return em.createQuery("select count(r) from Region r", Integer.class).getSingleResult();
+    }
 }
