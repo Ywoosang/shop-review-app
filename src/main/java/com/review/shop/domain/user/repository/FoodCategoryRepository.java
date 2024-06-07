@@ -25,4 +25,8 @@ public class FoodCategoryRepository {
     public List<FoodCategory> findAll() {
         return em.createQuery("select f from FoodCategory f", FoodCategory.class).getResultList();
     }
+
+    public Integer getCount() {
+        return em.createQuery("select count(f) from FoodCategory f", Integer.class).getSingleResult();
+    }
 }

@@ -5,7 +5,6 @@ import com.review.shop.domain.store.repository.RegionRepository;
 import com.review.shop.domain.user.model.FoodCategory;
 import com.review.shop.domain.user.repository.FoodCategoryRepository;
 import jakarta.annotation.PostConstruct;
-import jakarta.persistence.EntityManager;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
@@ -14,7 +13,7 @@ import java.util.Arrays;
 
 @Component
 @RequiredArgsConstructor
-public class Seed {
+public class Seeder {
     private final InitService initService;
 
     @PostConstruct
@@ -31,6 +30,8 @@ public class Seed {
         private final RegionRepository regionRepository;
 
         public void initFoodCategories() {
+            final Integer count = foodCategoryRepository.getCount();
+            if (count > 0) return;
             final String[] foodCategoryNames = {
                     "한식", "일식", "중식",
                     "양식","치킨","분식",
@@ -47,6 +48,8 @@ public class Seed {
         }
 
         public void initRegions() {
+            final Integer count = regionRepository.getCount();
+            if (count > 0) return;
             final String[] regionNames = {
                     "고덕1동","고덕2동","상일동","강일동",
                     "명일1동","명일2동","길동",
