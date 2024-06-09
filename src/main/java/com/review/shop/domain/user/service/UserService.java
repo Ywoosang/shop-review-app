@@ -7,6 +7,5 @@ import static com.review.shop.domain.user.dto.UserRequestDTO.*;
 
 public interface UserService {
     // command
-    User signUp(SignUpRequestDTO request);
     Optional<User> findOne(Long id);
 }

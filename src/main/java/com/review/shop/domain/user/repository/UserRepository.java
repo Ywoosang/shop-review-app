@@ -2,6 +2,7 @@ package com.review.shop.domain.user.repository;
 
 import com.review.shop.domain.user.model.User;
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.TypedQuery;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 import java.util.List;
@@ -26,4 +27,13 @@ public class UserRepository {
         return em.createQuery("select u from User u", User.class).getResultList();
     }
 
+    public Optional<User> findByEmail(String email) {
+        TypedQuery<User> query = em.createQuery("select u from User u where u.email = :email", User.class);
+        query.setParameter("email", email);
+        List<User> results = query.getResultList();
+        if (results.isEmpty()) {
+            return Optional.empty();
+        }
+        return Optional.of(results.get(0));
+    }
 }
