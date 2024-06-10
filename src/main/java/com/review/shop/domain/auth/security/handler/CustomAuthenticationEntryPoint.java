@@ -6,7 +6,7 @@ import com.review.shop.global.api.code.status.ErrorStatus;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.AuthenticationEntryPoint;
@@ -16,8 +16,11 @@ import java.io.IOException;
 
 @Slf4j(topic = "UNAUTHORIZATION_EXCEPTION_HANDLER")
 @Component
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class CustomAuthenticationEntryPoint implements AuthenticationEntryPoint {
+
+    private final ObjectMapper objectMapper;
+
     @Override
     public void commence(
             HttpServletRequest request,
@@ -30,6 +33,6 @@ public class CustomAuthenticationEntryPoint implements AuthenticationEntryPoint 
         response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
         response.setContentType("application/json");
         response.setCharacterEncoding("UTF-8");
-        response.getWriter().write(new ObjectMapper().writeValueAsString(commonResponse));
+        response.getWriter().write(objectMapper.writeValueAsString(commonResponse));
     }
 }
