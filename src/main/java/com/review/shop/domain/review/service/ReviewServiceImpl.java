@@ -15,6 +15,6 @@ public class ReviewServiceImpl implements ReviewService {
     private final ReviewRepository reviewRepository;
 
     public Optional<Review> findReview(Long id) {
-        return Optional.ofNullable(reviewRepository.findById(id));
+        return reviewRepository.findById(id);
     }
 }

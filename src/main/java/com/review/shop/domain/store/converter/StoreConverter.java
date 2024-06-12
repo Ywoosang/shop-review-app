@@ -59,6 +59,20 @@ public class StoreConverter {
                 .build();
     }
 
+    public static FindStoreListResponseDTO toFindStoreListDTO(List<Store> stores) {
+        List<StoreOverviewResponseDTO> storeDTOs = stores.stream()
+                .map(store -> StoreOverviewResponseDTO.builder()
+                        .storeId(store.getId())
+                        .name(store.getName())
+                        .score(store.getScore())
+                        .regionName(store.getRegion().getName())
+                        .build()
+                ).toList();
+        return FindStoreListResponseDTO.builder()
+                .stores(storeDTOs)
+                .build();
+    }
+
 
     // requestDTO -> Entity
     public static Store toStore(CreateStoreRequestDTO request) {

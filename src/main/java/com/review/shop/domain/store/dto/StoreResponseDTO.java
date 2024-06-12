@@ -70,18 +70,43 @@ public class StoreResponseDTO {
 
     @Getter
     @Builder
+    public static class FindStoreListResponseDTO {
+        @Schema(description = "가게 목록")
+        private List<StoreOverviewResponseDTO> stores;
+    }
+
+    @Getter
+    @Builder
+    public static class StoreOverviewResponseDTO {
+        @Schema(description = "가게 ID", example = "1")
+        private Long storeId;
+
+        @Schema(description = "가게 이름", example = "스프링 문구점")
+        private String name;
+
+        @Schema(description = "가게 평점", example = "4.5")
+        private Float score;
+
+        @Schema(description = "지역 정보", example = "서울특별시 강동구")
+        private String regionName;
+    }
+
+
+
+    @Getter
+    @Builder
     public static class StoreRegionResponseDTO {
         @Schema(description = "지역 ID", example = "1")
         private Long id;
 
-        @Schema(description = "지역 이름", example = "서울특별시")
+        @Schema(description = "지역 이름", example = "서울특별시 강동구")
         private String name;
     }
 
     @Getter
     @Builder
     public static class FindStoreReviewsResponseDTO {
-        @Schema(description = "리뷰 목록", example = "")
+        @Schema(description = "리뷰 목록")
         private List<StoreReviewResponseDTO> reviews;
     }
 
