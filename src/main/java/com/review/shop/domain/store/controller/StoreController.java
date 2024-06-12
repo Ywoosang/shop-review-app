@@ -3,6 +3,7 @@ package com.review.shop.domain.store.controller;
 import com.review.shop.domain.review.model.Review;
 import com.review.shop.domain.store.converter.StoreConverter;
 import com.review.shop.domain.store.dto.StoreRequestDTO;
+import com.review.shop.domain.store.enums.SortType;
 import com.review.shop.domain.store.model.Store;
 import com.review.shop.domain.store.service.StoreService;
 import com.review.shop.global.api.CommonResponse;
@@ -48,22 +49,33 @@ public class StoreController {
     }
 
 
-    @GetMapping("/{storeId}/reviews")
-    @Operation(summary="가게 리뷰 목록 조회", description = "가게 리뷰 목록을 조회할 때 사용한다.")
-    public CommonResponse<FindStoreReviewsResponseDTO> findStoreReviews(
-            @PathVariable("storeId") @IsExist(entity = Store.class, errorStatus = STORE_NOT_FOUND)   Long storeId
-    ) {
-        List<Review> reviews = storeService.findStoreReviews(storeId);
-        return CommonResponse.success(StoreConverter.toFindStoreReviewsDTO(reviews));
-    }
+//    @GetMapping("/{storeId}/reviews")
+//    @Operation(summary="가게 리뷰 목록 조회", description = "가게 리뷰 목록을 조회할 때 사용한다.")
+//    public CommonResponse<FindStoreReviewsResponseDTO> findStoreReviews(
+//            @PathVariable("storeId") @IsExist(entity = Store.class, errorStatus = STORE_NOT_FOUND)   Long storeId
+//    ) {
+//        List<Review> reviews = storeService.findStoreReviews(storeId);
+//        return CommonResponse.success(StoreConverter.toFindStoreReviewsDTO(reviews));
+//    }
 
 
     @GetMapping("/{storeId}")
     @Operation(summary="가게 정보 조회", description = "가게에 대한 정보를 조회할 때 사용한다.")
-    public CommonResponse<FindStoreResponseDTO> findStore(
+    public CommonResponse<FindStoreResponseDTO> getStore(
             @PathVariable("storeId") @IsExist(entity = Store.class, errorStatus = STORE_NOT_FOUND) Long storeId
     ) {
         Store store = storeService.findStore(storeId).get();
         return CommonResponse.success(StoreConverter.toFindStoreDTO(store));
+    }
+
+    @GetMapping
+    @Operation
+    public CommonResponse<FindStoreListResponseDTO> getStoreList(
+            @RequestParam(required = false) Long lastId,
+            @RequestParam(defaultValue = "10") int pageSize,
+            @RequestParam(defaultValue = "LATEST") SortType sortType
+            ) {
+        List<Store> storeList = storeService.findStores(lastId, pageSize, sortType);
+        return CommonResponse.success(StoreConverter.toFindStoreListDTO(storeList));
     }
 }

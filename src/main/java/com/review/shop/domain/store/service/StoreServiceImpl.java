@@ -4,6 +4,7 @@ import com.review.shop.domain.mission.model.Mission;
 import com.review.shop.domain.review.model.Review;
 import com.review.shop.domain.store.converter.StoreConverter;
 import com.review.shop.domain.store.dto.StoreRequestDTO;
+import com.review.shop.domain.store.enums.SortType;
 import com.review.shop.domain.store.model.Region;
 import com.review.shop.domain.store.model.Store;
 import com.review.shop.domain.store.repository.RegionRepository;
@@ -32,7 +33,7 @@ public class StoreServiceImpl implements StoreService{
         Region region = regionRepository.findById(request.getRegionId()).get();
         Store newStore = StoreConverter.toStore(request);
         newStore.addRegion(region);
-        storeRepository.create(newStore);
+        storeRepository.save(newStore);
         return newStore;
     }
 
@@ -56,13 +57,13 @@ public class StoreServiceImpl implements StoreService{
         return storeRepository.findById(storeId);
     }
 
-    @Override
-    public List<Mission> findStoreMissions(Long storeId) {
-        return storeRepository.findStoreMissions(storeId);
-    }
+    // @Override
+    // public List<Mission> findStoreMissions(Long storeId) {
+//        return storeRepository.findStoreMissions(storeId);
+//    }
 
     @Override
-    public List<Review> findStoreReviews(Long storeId) {
-        return storeRepository.findStoreReviews(storeId);
+    public List<Store> findStores(Long lastId, int pageSize, SortType sortType) {
+        return storeRepository.findStoresWithPagination(lastId, pageSize, sortType);
     }
 }
