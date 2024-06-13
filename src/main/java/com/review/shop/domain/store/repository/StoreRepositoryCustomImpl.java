@@ -3,13 +3,16 @@ package com.review.shop.domain.store.repository;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.review.shop.domain.review.model.QReview;
 import com.review.shop.domain.store.enums.SortType;
+import com.review.shop.domain.store.model.QRegion;
 import com.review.shop.domain.store.model.QStore;
 import com.review.shop.domain.store.model.Store;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
+@Slf4j
 @Repository
 @RequiredArgsConstructor
 public class StoreRepositoryCustomImpl implements StoreRepositoryCustom {
@@ -26,7 +29,9 @@ public class StoreRepositoryCustomImpl implements StoreRepositoryCustom {
 
     private List<Store> findStoresByLatest(Long lastId, int pageSize) {
         QStore store = QStore.store;
-        var query = queryFactory.selectFrom(store);
+        QRegion region = QRegion.region;
+        var query = queryFactory.selectFrom(store)
+                .leftJoin(store.region, region).fetchJoin();
 
         if (lastId != null) {
             query.where(store.id.lt(lastId));
@@ -39,7 +44,9 @@ public class StoreRepositoryCustomImpl implements StoreRepositoryCustom {
 
     private List<Store> findStoresByOldest(Long lastId, int pageSize) {
         QStore store = QStore.store;
-        var query = queryFactory.selectFrom(store);
+        QRegion region = QRegion.region;
+        var query = queryFactory.selectFrom(store)
+                .leftJoin(store.region, region).fetchJoin();
 
         if (lastId != null) {
             query.where(store.id.gt(lastId));
@@ -52,24 +59,30 @@ public class StoreRepositoryCustomImpl implements StoreRepositoryCustom {
     private List<Store> findStoresByMostReviewed(Long lastId, int pageSize) {
         QStore store = QStore.store;
         QReview review = QReview.review;
-        var query = queryFactory.selectFrom(store);
+        QRegion region = QRegion.region;
 
+        Long lastReviewCount = null;
         if (lastId != null) {
-            Long lastReviewCount = queryFactory.select(review.count())
+            lastReviewCount = queryFactory.select(review.count())
                     .from(review)
                     .where(review.store.id.eq(lastId))
                     .fetchOne();
-            query.where(store.id.lt(lastId)
-                    .and(queryFactory.select(review.count())
-                    .from(review)
-                    .where(review.store.id.eq(store.id))
-                    .goe(lastReviewCount)));
         }
 
-        query.leftJoin(store.reviews, review)
-                .groupBy(store.id)
-                .orderBy(review.id.desc(), store.id.desc());
+        var query = queryFactory.selectFrom(store)
+                .leftJoin(store.region, region).fetchJoin()
+                .leftJoin(store.reviews, review)
+                .groupBy(store.id);
+
+        if (lastReviewCount != null) {
+            query.having(
+                    review.count().lt(lastReviewCount)
+                            .or(review.count().eq(lastReviewCount).and(store.id.lt(lastId)))
+            );
+        }
+        query.orderBy(store.id.desc());
 
         return query.limit(pageSize).fetch();
     }
+
 }
